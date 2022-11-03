@@ -37,7 +37,7 @@ int buscaindice (Tveiculo * bd[], int tam, string placa){
 int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     int j;
     
-    for (int i = 0; i < tam; i++){
+    for (int i = 0; i < tam; i++){       //retirarndo o indicie desejado
         if (bd[i] -> placa == y){
             delete bd[i];
             bd[i] = NULL;
@@ -49,21 +49,21 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     out.open("BD_veiculos_2.txt");
     string str;
 
-    for(j=0;j<tam -1;j++){            
+    for(j=0;j<tam -1;j++){            //escrevendo no arquivo sem o que desejamos resolver
         if(bd[j]!= NULL){
             out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
                     <<bd[j]->ano<< " "<<bd[j]->km<< " "<<bd[j]->potencia<< " "
                     <<bd[j]->combustivel<< " "<<bd[j]->cambio<< " "<<bd[j]->direcao<< " "
-                    <<bd[j]->cor<< " "<<bd[j]->portas<< " "<<bd[j]->placa<< " "<<bd[j]->valor<< " "<< endl;
+                    <<bd[j]->cor<< " "<<bd[j]->portas<< " "<<bd[j]->placa<< " "<<bd[j]->valor<< " "<< endl; 
                     
         }
     }
     out.close();
     
 }
-void insereveiculo(Tveiculo * bd[],int tam,Tveiculo * novo){
+void insereveiculo(Tveiculo * bd[],int tam,Tveiculo novo){
     
-    bd[tam++] = novo;
+    bd[tam]->modelo = novo.modelo;
     /*
     bd[tam]->marca = novo.marca;
     bd[tam]->tipo = novo.tipo;
@@ -80,7 +80,7 @@ void insereveiculo(Tveiculo * bd[],int tam,Tveiculo * novo){
     */
     
 
-    cout << bd[tam+1]->modelo;
+    cout << bd[tam]->modelo;
 
 }
 
@@ -90,11 +90,11 @@ void insereveiculo(Tveiculo * bd[],int tam,Tveiculo * novo){
 
 
 
-void ordemplaca(Tveiculo * bd[],int tam){
+void ordemplaca(Tveiculo * bd[],int tam){ 
     Tveiculo * duplicado[50];
     Tveiculo * aux;
 
-    for(int i=0;i<tam;i++){
+    for(int i=0;i<tam;i++){         // passando valores para um novo vetor de struct
         duplicado[i] = bd[i];
     }
 
@@ -111,7 +111,7 @@ void ordemplaca(Tveiculo * bd[],int tam){
         }
 }
 
-    for (int i = 0; i < tam; i++){
+    for (int i = 0; i < tam; i++){                      //printando valores ordenados
             cout<< duplicado[i]->modelo << "  ";
             cout<< duplicado[i]->marca << "  ";
             cout<< duplicado[i]->tipo << "  ";
@@ -263,19 +263,17 @@ int main(int argc, char** argv){
     cout<< "Insira a opção desejada:"<< endl;
     cin>> x;
     
-    Tveiculo * novo;
-    string dadosAux; 
+    Tveiculo novo; 
     switch(x){          // menu do programa
             case 1:
                 cout << "incluir novo veiculo\n";
                 
                 cout << "Digite o modelo do veiculo\n";
-                cin >> dadosAux;
-                novo->modelo = dadosAux;
+                cin >> novo.modelo;
+        
+               // cout << "Digite a marca do veiculo\n";
+                //cin >> novo.ano;
                 
-                cout << "Digite a marca do veiculo\n";
-                cin >> dadosAux;
-                novo->marca = dadosAux;
 /*
                 cout << "Digite o tipo do veiculo\n";
                 cin >> novo.tipo;
@@ -371,4 +369,5 @@ int main(int argc, char** argv){
     
     return 0;
 }   
+
 
