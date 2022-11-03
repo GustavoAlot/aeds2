@@ -34,23 +34,68 @@ int buscaindice (Tveiculo * bd[], int tam, string placa){
             cout << i;
 }
 
-void remove_veiculo(string y, int tam, Tveiculo * bd[]){
-
-    for (int i = 0; i < tam; i++)
+int remove_veiculo(string y, int tam, Tveiculo * bd[]){
+    int j;
+    
+    for (int i = 0; i < tam; i++){
         if (bd[i] -> placa == y){
             delete bd[i];
             bd[i] = NULL;
+    
         }
+    }
 
-            
+    
+    ofstream out("BD_veiculos_2.txt");
 
+    for(j=0;j<tam;j++){            
+        if(bd[j]== NULL){
+            out <<bd[j+1]->modelo,bd[j+1]->marca,bd[j+1]->tipo,bd[j+1]->tipo,bd[j+1]->ano,bd[j+1]->km,bd[j+1]->potencia,bd[j+1]->combustivel,bd[j+1]->cambio,bd[j+1]->direcao,bd[j+1]->cor,bd[j+1]->portas,bd[j+1]->valor;
+            j++;
+        }
+        else{
+            out <<bd[j]->modelo,bd[j]->marca,bd[j]->tipo,bd[j]->tipo,bd[j]->ano,bd[j]->km,bd[j]->potencia,bd[j]->combustivel,bd[j]->cambio,bd[j]->direcao,bd[j]->cor,bd[j]->portas,bd[j]->valor;
 
-
-
-
+        }
+    }
+    out.close();
+    
 }
 
 
+void ordemplaca(Tveiculo * bd[],int tam){
+ Tveiculo * aux;
+    for(int i=0; i < tam  -1;i++){
+        for (int j=0; j<tam-1-i; j++){
+            if (bd[j]-> placa > bd[j+1]-> placa){
+
+                aux= bd[j];
+
+                bd[j]= bd[j+1];
+
+                bd[j+1]=aux; 
+            }
+    }
+}
+
+    for (int i = 0; i < tam; i++){
+            cout<< bd[i]->modelo << "  ";
+            cout<< bd[i]->marca << "  ";
+            cout<< bd[i]->tipo << "  ";
+            cout<< bd[i]->ano << "  ";
+            cout<< bd[i]->km << "  ";
+            cout<< bd[i]->potencia << "  ";
+            cout<< bd[i]->combustivel << "  ";
+            cout<< bd[i]->cambio << "  ";
+            cout<< bd[i]-> direcao << "  ";
+            cout<< bd[i]->cor << "  ";
+            cout<< bd[i]->portas << "  ";
+            cout<< bd[i]->placa << "  ";
+            cout<< bd[i]->valor << endl;
+
+
+    }
+}
 
 
 
@@ -151,6 +196,7 @@ int main(int argc, char** argv){
             
             switch(u){
                 case 1:
+                    remove_veiculo(y,tam,bd);
                     cout << "Veículo removido"<< endl;
                     break;
                     
@@ -161,6 +207,8 @@ int main(int argc, char** argv){
                 default:
                     cout << "Opção inválida"<< endl;
             }
+
+
         }
         else {
             cout << "Veículo não encontrado";
@@ -172,7 +220,8 @@ int main(int argc, char** argv){
                 break;
                 
             case 4:
-                cout << "[4] Ordenação por placa.";
+                cout << "[4] Ordenação por placa./n";
+                ordemplaca(bd, tam);
                 break;
                 
             case 5:
@@ -190,4 +239,4 @@ int main(int argc, char** argv){
     
     
     return 0;
-}
+}   
