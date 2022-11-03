@@ -49,7 +49,7 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     out.open("BD_veiculos_2.txt");
     string str;
 
-    for(j=0;j<tam;j++){            
+    for(j=0;j<tam -1;j++){            
         if(bd[j]!= NULL){
             out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
                     <<bd[j]->ano<< " "<<bd[j]->km<< " "<<bd[j]->potencia<< " "
@@ -61,55 +61,104 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     out.close();
     
 }
+void insereveiculo(Tveiculo * bd[],int tam,Tveiculo * novo){
+    
+    bd[tam++] = novo;
+    /*
+    bd[tam]->marca = novo.marca;
+    bd[tam]->tipo = novo.tipo;
+    bd[tam]->ano = novo.ano;
+    bd[tam]->km = novo.km;
+    bd[tam]->potencia = novo.potencia;
+    bd[tam]->combustivel = novo.combustivel;
+    bd[tam]->cambio = novo.cambio;
+    bd[tam]->direcao = novo.direcao;
+    bd[tam]->cor = novo.cor;    tam++;
+    bd[tam]->portas = novo.portas;
+    bd[tam]->placa = novo.placa;
+    bd[tam]->valor = novo.valor;
+    */
+    
+
+    cout << bd[tam+1]->modelo;
+
+}
+
+
+
+
+
 
 
 void ordemplaca(Tveiculo * bd[],int tam){
- Tveiculo * aux;
+    Tveiculo * duplicado[50];
+    Tveiculo * aux;
+
+    for(int i=0;i<tam;i++){
+        duplicado[i] = bd[i];
+    }
+
     for(int i=0; i < tam  -1;i++){
         for (int j=0; j<tam-1-i; j++){
-            if (bd[j]-> placa > bd[j+1]-> placa){
+            if (duplicado[j]-> placa > duplicado[j+1]-> placa){
 
-                aux= bd[j];
+                aux = duplicado[j];
 
-                bd[j]= bd[j+1];
+                duplicado[j] = duplicado[j+1];
 
-                bd[j+1]=aux; 
+                duplicado[j+1] = aux; 
             }
         }
 }
 
-
     for (int i = 0; i < tam; i++){
-            cout<< bd[i]->modelo << "  ";
-            cout<< bd[i]->marca << "  ";
-            cout<< bd[i]->tipo << "  ";
-            cout<< bd[i]->ano << "  ";
-            cout<< bd[i]->km << "  ";
-            cout<< bd[i]->potencia << "  ";
-            cout<< bd[i]->combustivel << "  ";
-            cout<< bd[i]->cambio << "  ";
-            cout<< bd[i]-> direcao << "  ";
-            cout<< bd[i]->cor << "  ";
-            cout<< bd[i]->portas << "  ";
-            cout<< bd[i]->placa << "  ";
-            cout<< bd[i]->valor << endl;
+            cout<< duplicado[i]->modelo << "  ";
+            cout<< duplicado[i]->marca << "  ";
+            cout<< duplicado[i]->tipo << "  ";
+            cout<< duplicado[i]->ano << "  ";
+            cout<< duplicado[i]->km << "  ";
+            cout<< duplicado[i]->potencia << "  ";
+            cout<< duplicado[i]->combustivel << "  ";
+            cout<< duplicado[i]->cambio << "  ";
+            cout<< duplicado[i]-> direcao << "  ";
+            cout<< duplicado[i]->cor << "  ";
+            cout<< duplicado[i]->portas << "  ";
+            cout<< duplicado[i]->placa << "  ";
+            cout<< duplicado[i]->valor << endl;
 
 
     }
 }
 
-    void maisprox(Tveiculo * bd[],int tam,float n){
-        int caunt = 0;
-        int maior;
-        float modulo[10];
-        Tveiculo * valorprox [10];
+void maisprox(Tveiculo * bd[],int tam,float n){
+    int caunt = 0;
+    int maior;
+    float modulo[10];
+    Tveiculo * valorprox [10];
 
-        for(int i = 0; i < 10; i++){   // preenche os 10 primeiros valores do bd
-            if(caunt < 10){
-                valorprox[i] = bd[i];
-                modulo[i] = abs(n - valorprox[i]->valor);
-                caunt++;
-            }
+    for(int i = 0; i < 10; i++){   // preenche os 10 primeiros valores do bd
+        if(caunt < 10){
+            valorprox[i] = bd[i];
+            modulo[i] = abs(n - valorprox[i]->valor);
+            caunt++;
+        }
+    }
+
+    for(int i = 0; i < 10; i++){   //salva o maior valor
+        if(i == 0){
+            maior = modulo[i];
+            caunt = i;
+        }
+        else if(modulo[i] > maior){
+            maior = modulo[i];
+            caunt = i;
+        }
+    }
+
+    for(int i = 10; i < tam; i++){      //percorre o resto do banco de dados, colocando menores posicoes no vetor
+        if(   (abs(n - bd[i]->valor)) < maior  ){
+            valorprox[caunt] = bd[i];
+            modulo[caunt] = abs(n - bd[i]->valor);
         }
 
         for(int i = 0; i < 10; i++){   //salva o maior valor
@@ -121,60 +170,44 @@ void ordemplaca(Tveiculo * bd[],int tam){
                 maior = modulo[i];
                 caunt = i;
             }
-        }
-
-
-        for(int i = 9; i < tam; i++){  //preenche com o resto do bd
-            if(   (abs(n - bd[i]->valor)) < maior  ){
-                valorprox[caunt] = bd[i];
-                modulo[caunt] = abs(n - bd[i]->valor);
-            }
-
-            for(int i = 0; i < 10; i++){   //salva o maior valor
-                if(i == 0){
-                    maior = modulo[i];
-                    caunt = i;
-                }
-                else if(modulo[i] > maior){
-                    maior = modulo[i];
-                    caunt = i;
-                }
-            } 
-
-
-        }
-        cout <<"Os 10 carros com valor mais proximos sao:\n";
-        for (int i = 0; i < 10; i++){
-            cout<< valorprox[i]->modelo << "  ";
-            cout<< valorprox[i]->marca << "  ";
-            cout<< valorprox[i]->tipo << "  ";
-            cout<< valorprox[i]->ano << "  ";
-            cout<< valorprox[i]->km << "  ";
-            cout<< valorprox[i]->potencia << "  ";
-            cout<< valorprox[i]->combustivel << "  ";
-            cout<< valorprox[i]->cambio << "  ";
-            cout<< valorprox[i]-> direcao << "  ";
-            cout<< valorprox[i]->cor << "  ";
-            cout<< valorprox[i]->portas << "  ";
-            cout<< valorprox[i]->placa << "  ";
-            cout<< valorprox[i]->valor << endl;
-        }
-
-
-
-        
-
+        } 
 
     }
 
+    Tveiculo * aux;                 //ordena e printa em ordem de proximidade com o valor escolhido
+    float aux2;
+    for(int i = 0; i < 10-1;i++){
+        for (int j=0; j<10-1-i; j++){
+            if (modulo[j] > modulo[j+1]){
+                aux2 = modulo[j];
+                modulo[j] = modulo[j+1];
+                modulo[j+1] = aux2; 
 
+                aux = valorprox[j];
+                valorprox[j] = valorprox[j+1];
+                valorprox[j+1] = aux; 
+            }
+        }
+    }
 
-float modulo(float a, float b){
-    if (a>b)
-        return a-b;
-    else
-        return b-a;
+    cout <<"Os 10 carros com valor mais proximos sao:\n";
+    for (int i = 0; i < 10; i++){
+        cout<< valorprox[i]->modelo << "  ";
+        cout<< valorprox[i]->marca << "  ";
+        cout<< valorprox[i]->tipo << "  ";
+        cout<< valorprox[i]->ano << "  ";
+        cout<< valorprox[i]->km << "  ";
+        cout<< valorprox[i]->potencia << "  ";
+        cout<< valorprox[i]->combustivel << "  ";
+        cout<< valorprox[i]->cambio << "  ";
+        cout<< valorprox[i]-> direcao << "  ";
+        cout<< valorprox[i]->cor << "  ";
+        cout<< valorprox[i]->portas << "  ";
+        cout<< valorprox[i]->placa << "  ";
+        cout<< valorprox[i]->valor << endl;
+    }
 }
+
 
 
 
@@ -191,7 +224,7 @@ int main(int argc, char** argv){
     int tam = 0;
     
     
-    if (myfile.is_open()){
+    if (myfile.is_open()){                      // passando txt para o vetor de ponteiros para struct
         while ( !myfile.eof() ){
             bd[tam] = new Tveiculo; 
             myfile >> bd[tam]->modelo;
@@ -211,29 +244,11 @@ int main(int argc, char** argv){
         }
         myfile.close();
         
-        
-        /*for (int i = 0; i < tam; i++){
-            cout<< bd[i]->modelo << "  ";
-            cout<< bd[i]->marca << "  ";
-            cout<< bd[i]->tipo << "  ";
-            cout<< bd[i]->ano << "  ";
-            cout<< bd[i]->km << "  ";
-            cout<< bd[i]->potencia << "  ";
-            cout<< bd[i]->combustivel << "  ";
-            cout<< bd[i]->cambio << "  ";
-            cout<< bd[i]-> direcao << "  ";
-            cout<< bd[i]->cor << "  ";
-            cout<< bd[i]->portas << "  ";
-            cout<< bd[i]->placa << "  ";
-            cout<< bd[i]->valor << endl;
-        }*/
-        //Apontando os espaços vazios para NULL.
-        for (int i = tam; i < 50; i++)
+                                        
+        for (int i = tam; i < 50; i++)   //Apontando os espaços vazios para NULL.
             bd[i] = NULL;
         
-       /* // Removendo as structs da memória.
-        for (int i = 0; i < tam; i++)
-            delete (bd[i]);*/
+      
     }
     else
         cout << "Arquivo não encontrado. " << endl;
@@ -248,14 +263,60 @@ int main(int argc, char** argv){
     cout<< "Insira a opção desejada:"<< endl;
     cin>> x;
     
-    
-    switch(x){
+    Tveiculo * novo;
+    string dadosAux; 
+    switch(x){          // menu do programa
             case 1:
+                cout << "incluir novo veiculo\n";
                 
+                cout << "Digite o modelo do veiculo\n";
+                cin >> dadosAux;
+                novo->modelo = dadosAux;
+                
+                cout << "Digite a marca do veiculo\n";
+                cin >> dadosAux;
+                novo->marca = dadosAux;
+/*
+                cout << "Digite o tipo do veiculo\n";
+                cin >> novo.tipo;
+
+                cout << "Digite o ano do veiculo";
+                cin >> novo.ano;
+
+                cout << "Digite a kilometragem do veiculo";
+                cin >> novo.km;
+
+                cout << "Digite a potencia do veiculo";
+                cin >> novo.potencia;
+
+                cout << "Digite o combustivel do veiculo"bd[tam++]->modelo;
+                cin >> novo.combustivel;
+
+                cout << "Digite o cambio do veiculo";
+                cin >> novo.cambio;
+
+                cout << "Digite a direcao do veiculo";
+                cin >> novo.direcao;
+
+                cout << "Digite a cor do veiculo";
+                cin >> novo.cor;
+
+                cout << "Digite as portas do veiculo";
+                cin >> novo.portas;
+
+                cout << "Digite a placa do veiculo";
+                cin >> novo.placa;
+
+                cout << "Digite o valor do veiculo";
+                cin >> novo.valor;
+*/
+          
+               insereveiculo(bd,tam,novo);
+
                 break;
                 
             case 2:
-                cout<< "Insira a placa:" << endl;
+                cout<< "\nInsira a placa:" << endl;
                 cin >> y;
                 p = busca (bd, tam, y);
                 if (p){
@@ -287,14 +348,14 @@ int main(int argc, char** argv){
                 
             case 3:
                 float v;
-                cout << "[3] Buscar os 10 veículos próximos.";
+                cout << "\n[3] Buscar os 10 veículos próximos.";
                 cout << "\nDigite o valor: \n";
                 cin >> v;
                 maisprox(bd,tam,v);
                 break;
                 
             case 4:
-                cout << "[4] Ordenação por placa./n";
+                cout << "\n[4] Ordenação por placa.\n";
                 ordemplaca(bd, tam);
                 break;
                 
@@ -306,11 +367,8 @@ int main(int argc, char** argv){
                 
         }
     
-  
-    
-    
-    
     
     
     return 0;
 }   
+
