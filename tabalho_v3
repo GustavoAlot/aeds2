@@ -247,7 +247,8 @@ int main(int argc, char** argv){
     cout<< "Insira a opção desejada:"<< endl;
     cin>> x;
     
-    Tveiculo * novo; 
+    Tveiculo * novo;
+    do{ 
     switch(x){          // menu do programa
             case 1:
             novo  = new Tveiculo;
@@ -257,7 +258,7 @@ int main(int argc, char** argv){
                 cout << "Digite o modelo do veiculo\n";
                 cin >> novo->modelo;
         
-               // cout << "Digite a marca do veiculo\n";
+                //cout << "Digite a marca do veiculo\n";
                 //cin >> novo.ano;
                 
 /*
@@ -346,14 +347,13 @@ int main(int argc, char** argv){
             case 5:
                 printarq(bd,tam);
                 cout << "Programa finalizado.";
-                break;
+                return 0;
         default:
             cout << "Opção inválida.";
                 
         }
+    }while (x !=0);
+
     
-    
-    
-    return 0;
 }   
 
