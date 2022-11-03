@@ -45,47 +45,31 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
         }
     }
     
+}
+void insereveiculo(Tveiculo * bd[],int tam,Tveiculo*novo){
+  
+        for(int i =0; i<tam; i++){
+            if(bd[i]== NULL){
+                bd[i]= novo;
+                i=tam;
+            }
+        }
+
+}
+
+
+void printarq(Tveiculo * bd[],int tam){
     ofstream out;
     out.open("BD_veiculos_2.txt");
-    string str;
-
-    for(j=0;j<tam -1;j++){            //escrevendo no arquivo sem o que desejamos resolver
-        if(bd[j]!= NULL){
-            out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
+    for(int j = 0; j<tam;j++){  
+         out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
                     <<bd[j]->ano<< " "<<bd[j]->km<< " "<<bd[j]->potencia<< " "
                     <<bd[j]->combustivel<< " "<<bd[j]->cambio<< " "<<bd[j]->direcao<< " "
-                    <<bd[j]->cor<< " "<<bd[j]->portas<< " "<<bd[j]->placa<< " "<<bd[j]->valor<< " "<< endl; 
-                    
-        }
+                    <<bd[j]->cor<< " "<<bd[j]->portas<< " "<<bd[j]->placa<< " "<<bd[j]->valor<< " "<< endl;
+
     }
     out.close();
-    
 }
-void insereveiculo(Tveiculo * bd[],int tam,Tveiculo novo){
-    
-    bd[tam]->modelo = novo.modelo;
-    /*
-    bd[tam]->marca = novo.marca;
-    bd[tam]->tipo = novo.tipo;
-    bd[tam]->ano = novo.ano;
-    bd[tam]->km = novo.km;
-    bd[tam]->potencia = novo.potencia;
-    bd[tam]->combustivel = novo.combustivel;
-    bd[tam]->cambio = novo.cambio;
-    bd[tam]->direcao = novo.direcao;
-    bd[tam]->cor = novo.cor;    tam++;
-    bd[tam]->portas = novo.portas;
-    bd[tam]->placa = novo.placa;
-    bd[tam]->valor = novo.valor;
-    */
-    
-
-    cout << bd[tam]->modelo;
-
-}
-
-
-
 
 
 
@@ -263,13 +247,15 @@ int main(int argc, char** argv){
     cout<< "Insira a opção desejada:"<< endl;
     cin>> x;
     
-    Tveiculo novo; 
+    Tveiculo * novo; 
     switch(x){          // menu do programa
             case 1:
+            novo  = new Tveiculo;
                 cout << "incluir novo veiculo\n";
-                
+                tam++;
+
                 cout << "Digite o modelo do veiculo\n";
-                cin >> novo.modelo;
+                cin >> novo->modelo;
         
                // cout << "Digite a marca do veiculo\n";
                 //cin >> novo.ano;
@@ -291,7 +277,7 @@ int main(int argc, char** argv){
                 cin >> novo.combustivel;
 
                 cout << "Digite o cambio do veiculo";
-                cin >> novo.cambio;
+                cin >> novo.cambio;nsereveiculo(bd,tam,novo);
 
                 cout << "Digite a direcao do veiculo";
                 cin >> novo.direcao;
@@ -358,6 +344,7 @@ int main(int argc, char** argv){
                 break;
                 
             case 5:
+                printarq(bd,tam);
                 cout << "Programa finalizado.";
                 break;
         default:
@@ -369,5 +356,4 @@ int main(int argc, char** argv){
     
     return 0;
 }   
-
 
