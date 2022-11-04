@@ -35,7 +35,6 @@ int buscaindice (Tveiculo * bd[], int tam, string placa){
 }
 
 int remove_veiculo(string y, int tam, Tveiculo * bd[]){
-    int j;
     
     for (int i = 0; i < tam; i++){       //retirarndo o indicie desejado
         if (bd[i] -> placa == y){
@@ -46,11 +45,49 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     }
     
 }
-void insereveiculo(Tveiculo * bd[],int tam,Tveiculo*novo){
+void insereveiculo(Tveiculo * bd[],int tam){
   
         for(int i =0; i<tam; i++){
             if(bd[i]== NULL){
-                bd[i]= novo;
+                cout << "Digite o modelo do veiculo\n";
+            cin >> bd[tam]->modelo;
+
+
+            cout << "Digite a marca do veiculo\n";
+            cin >> bd[tam]->marca;
+                
+            cout << "Digite o tipo do veiculo\n";
+            cin >> bd[tam]->tipo;
+
+            cout << "Digite o ano do veiculo\n";
+            cin >> bd[tam]->ano;
+
+            cout << "Digite a kilometragem do veiculo\n";
+            cin >> bd[tam]->km;
+
+            cout << "Digite a potencia do veiculo\n";
+            cin >> bd[tam]->potencia;
+
+            cout << "Digite o combustivel do veiculo\n";
+            cin >> bd[tam]->combustivel;
+
+            cout << "Digite o cambio do veiculo\n";
+            cin >> bd[tam]->cambio;
+
+            cout << "Digite a direcao do veiculo\n";
+            cin >> bd[tam]->direcao;
+
+            cout << "Digite a cor do veiculo\n";
+            cin >> bd[tam]->cor;
+
+            cout << "Digite as portas do veiculo\n";
+            cin >> bd[tam]->portas;
+
+            cout << "Digite a placa do veiculo\n";
+            cin >> bd[tam]->placa;
+
+            cout << "Digite o valor do veiculo\n";
+            cin >> bd[tam]->valor;
                 i=tam;
             }
         }
@@ -62,10 +99,12 @@ void printarq(Tveiculo * bd[],int tam){
     ofstream out;
     out.open("BD_veiculos_2.txt");
     for(int j = 0; j<tam;j++){  
+        if( bd[j] != NULL ){
          out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
                     <<bd[j]->ano<< " "<<bd[j]->km<< " "<<bd[j]->potencia<< " "
                     <<bd[j]->combustivel<< " "<<bd[j]->cambio<< " "<<bd[j]->direcao<< " "
                     <<bd[j]->cor<< " "<<bd[j]->portas<< " "<<bd[j]->placa<< " "<<bd[j]->valor<< " "<< endl;
+        }
 
     }
     out.close();
@@ -235,125 +274,91 @@ int main(int argc, char** argv){
       
     }
     else
-        cout << "Arquivo não encontrado. " << endl;
+        cout << "\n\n\n ARQUIVO NAO ENCONTRADO. \n\n\n" << endl;
     
-    
-    cout << "[1] Incluir novo veículo." << endl;
-    cout << "[2] Busca por placa." << endl;
-    cout << "[3] Buscar os 10 veículos próximos." << endl;
-    cout << "[4] Ordenação por placa." << endl;
-    cout << "[5] Sair do programa." << endl;
-    
-    cout<< "Insira a opção desejada:"<< endl;
-    cin>> x;
-    
-    Tveiculo * novo;
-    do{ 
-    switch(x){          // menu do programa
-            case 1:
-            novo  = new Tveiculo;
-                cout << "incluir novo veiculo\n";
-                tam++;
 
-                cout << "Digite o modelo do veiculo\n";
-                cin >> novo->modelo;
+
+    char op[50];
+    int newop;
+    do{     
+        cout << "[1] Incluir novo veículo." << endl;
+        cout << "[2] Busca por placa." << endl;
+        cout << "[3] Buscar os 10 veículos próximos." << endl;
+        cout << "[4] Ordenação por placa." << endl;
+        cout << "[5] Sair do programa." << endl;
+    
+        cout<< "Insira a opção desejada:"<< endl;
         
-                //cout << "Digite a marca do veiculo\n";
-                //cin >> novo.ano;
-                
-/*
-                cout << "Digite o tipo do veiculo\n";
-                cin >> novo.tipo;
-
-                cout << "Digite o ano do veiculo";
-                cin >> novo.ano;
-
-                cout << "Digite a kilometragem do veiculo";
-                cin >> novo.km;
-
-                cout << "Digite a potencia do veiculo";
-                cin >> novo.potencia;
-
-                cout << "Digite o combustivel do veiculo"bd[tam++]->modelo;
-                cin >> novo.combustivel;
-
-                cout << "Digite o cambio do veiculo";
-                cin >> novo.cambio;nsereveiculo(bd,tam,novo);
-
-                cout << "Digite a direcao do veiculo";
-                cin >> novo.direcao;
-
-                cout << "Digite a cor do veiculo";
-                cin >> novo.cor;
-
-                cout << "Digite as portas do veiculo";
-                cin >> novo.portas;
-
-                cout << "Digite a placa do veiculo";
-                cin >> novo.placa;
-
-                cout << "Digite o valor do veiculo";
-                cin >> novo.valor;
-*/
-          
-               insereveiculo(bd,tam,novo);
-
+        cin >> op;
+        newop = atoi(op) ;     
+        switch(newop){
+        
+        case 1:
+            if( tam ==50){
+                cout << "nao existe mais espaco disponivel no bd\n\n";
                 break;
-                
-            case 2:
-                cout<< "\nInsira a placa:" << endl;
-                cin >> y;
-                p = busca (bd, tam, y);
-                if (p){
-                    cout << "Veículo encontrado:" << endl;
-                    cout << p->marca << " " << p->ano << " " << endl;
-                    cout << "Deseja remover o veículo? [1]=sim ou [2]=não" << endl;
-                    cin >> u;
-            
-            switch(u){
-                case 1:
-                    remove_veiculo(y,tam,bd);
-                    cout << "Veículo removido"<< endl;
-                    break;
-                    
-                case 2:
-                    cout << "Veículo não removido" << endl;
-                    break;
-                    
-                default:
-                    cout << "Opção inválida"<< endl;
             }
+            tam++;
+            bd[tam] = new Tveiculo;
+            
+            insereveiculo(bd,tam);
+            cout << bd[tam]->modelo;
 
+            break;
+            
+        case 2:
+            int u;
+            cout<< "\nInsira a placa:" << endl;
+            cin >> y;
+            p = busca (bd, tam, y);
+            if (p){
+                cout << "Veículo encontrado:" << endl;
+                cout << p->marca << " " << p->ano << " " << endl;
+                cout << "Deseja remover o veículo? [1]=sim ou [2]=não" << endl;
+                cin >> u;
 
-        }
-        else {
-            cout << "Veículo não encontrado";
-        }
-                break;
-                
-            case 3:
-                float v;
-                cout << "\n[3] Buscar os 10 veículos próximos.";
-                cout << "\nDigite o valor: \n";
-                cin >> v;
-                maisprox(bd,tam,v);
-                break;
-                
-            case 4:
-                cout << "\n[4] Ordenação por placa.\n";
-                ordemplaca(bd, tam);
-                break;
-                
-            case 5:
-                printarq(bd,tam);
-                cout << "Programa finalizado.";
-                return 0;
+                while(u!= 1 && u!= 2){
+                    cout << "digite um valor valido";
+                    cin >> u;
+                }
+
+                if( u == 1 ){
+                    remove_veiculo(y,tam,bd);
+                    cout << "veiculo removido\n\n\n\n";
+                    tam--;
+                    break;
+                }else if ( u == 2 ){
+                    cout << "veiculo não removido\n\n\n\n";
+                    break;
+                }
+            }
+            cout << "o carro nao existe\n\n\n\n";
+            break;
+        case 3:
+            float v;
+            cout << "\n[3] Buscar os 10 veículos próximos.";
+            cout << "\nDigite o valor: \n";
+            cin >> v;
+            maisprox(bd,tam,v);
+            break;
+        
+        case 4:
+            cout << "\n[4] Ordenação por placa.\n";
+            ordemplaca(bd, tam);
+            break;
+            
+        case 5:
+            printarq(bd,tam-1);
+            cout << "Programa finalizado.";
+            return 0;
+            break;
+
         default:
-            cout << "Opção inválida.";
-                
-        }
-    }while (x !=0);
+            cout <<"\n\t\tOpção não válida\n\n";
+        } 
+    } while (op !=0);
 
+    system("pause");
+    return 0;
     
-}   
-
+}
