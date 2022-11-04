@@ -48,58 +48,63 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
 void insereveiculo(Tveiculo * bd[],int tam){
   
         for(int i =0; i<tam; i++){
-            if(bd[i]== NULL){
+            if(bd[i] == NULL){
+                int k = i-1;
+                bd[k] = new Tveiculo;
                 cout << "Digite o modelo do veiculo\n";
-            cin >> bd[tam]->modelo;
+            cin >> bd[i-1]->modelo;
 
 
             cout << "Digite a marca do veiculo\n";
-            cin >> bd[tam]->marca;
+            cin >> bd[k]->marca;
                 
             cout << "Digite o tipo do veiculo\n";
-            cin >> bd[tam]->tipo;
+            cin >> bd[k]->tipo;
 
             cout << "Digite o ano do veiculo\n";
-            cin >> bd[tam]->ano;
+            cin >> bd[k]->ano;
 
             cout << "Digite a kilometragem do veiculo\n";
-            cin >> bd[tam]->km;
+            cin >> bd[k]->km;
 
             cout << "Digite a potencia do veiculo\n";
-            cin >> bd[tam]->potencia;
+            cin >> bd[k]->potencia;
 
             cout << "Digite o combustivel do veiculo\n";
-            cin >> bd[tam]->combustivel;
+            cin >> bd[k]->combustivel;
 
             cout << "Digite o cambio do veiculo\n";
-            cin >> bd[tam]->cambio;
+            cin >> bd[k]->cambio;
 
             cout << "Digite a direcao do veiculo\n";
-            cin >> bd[tam]->direcao;
+            cin >> bd[k]->direcao;
 
             cout << "Digite a cor do veiculo\n";
-            cin >> bd[tam]->cor;
+            cin >> bd[k]->cor;
 
             cout << "Digite as portas do veiculo\n";
-            cin >> bd[tam]->portas;
+            cin >> bd[k]->portas;
 
             cout << "Digite a placa do veiculo\n";
-            cin >> bd[tam]->placa;
+            cin >> bd[k]->placa;
 
             cout << "Digite o valor do veiculo\n";
-            cin >> bd[tam]->valor;
+            cin >> bd[k]->valor;
                 i=tam;
+
             }
         }
 
+
 }
+
 
 
 void printarq(Tveiculo * bd[],int tam){
     ofstream out;
     out.open("BD_veiculos_2.txt");
     for(int j = 0; j<tam;j++){  
-        if( bd[j] != NULL ){
+        if( bd[j] != NULL){
          out << bd[j]->modelo << " " << bd[j]->marca << " " <<bd[j]->tipo<< " "
                     <<bd[j]->ano<< " "<<bd[j]->km<< " "<<bd[j]->potencia<< " "
                     <<bd[j]->combustivel<< " "<<bd[j]->cambio<< " "<<bd[j]->direcao<< " "
@@ -299,10 +304,9 @@ int main(int argc, char** argv){
                 break;
             }
             tam++;
-            bd[tam] = new Tveiculo;
             
             insereveiculo(bd,tam);
-            cout << bd[tam]->modelo;
+            
 
             break;
             
@@ -350,6 +354,7 @@ int main(int argc, char** argv){
         case 5:
             printarq(bd,tam-1);
             cout << "Programa finalizado.";
+ 
             return 0;
             break;
 
@@ -357,6 +362,7 @@ int main(int argc, char** argv){
             cout <<"\n\t\tOpção não válida\n\n";
         } 
     } while (op !=0);
+
 
     system("pause");
     return 0;
