@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-
-
 using namespace std;
 
 
@@ -40,8 +38,11 @@ int remove_veiculo(string y, int tam, Tveiculo * bd[]){
     
 }
 void insereveiculo(Tveiculo * bd[],int tam){ //inserção de um novo veículo
-  
-    for(int i =0; i<tam; i++){
+    if(tam == 50){
+        cout << "Limite de veiculos atingido" << endl;
+        return;
+    }
+    for(int i =0; i<50; i++){
         if(bd[i] == NULL){
             string pl;
             int k = i;
@@ -301,14 +302,8 @@ int main(int argc, char** argv){
         cin >> newop;   
         switch(newop){
         case 1:
-            if(tam == 50){
-                cout << "Não existe mais espaço disponível no bd\n\n";
-            }
-            else{
-                insereveiculo(bd,tam);
-                tam++;
-                
-            }
+            insereveiculo(bd,tam);
+            tam++;
             break;
             
         case 2:
@@ -318,7 +313,7 @@ int main(int argc, char** argv){
             p = busca (bd, tam, y);
             if (p){
                 cout << "Veículo encontrado:" << endl;
-                cout << p->marca << " " << p->ano << " " << endl;
+                cout << p->modelo << " " << p->marca << " " << p->ano << " " << endl;
                 cout << "Deseja remover o veículo? [1]=sim ou [2]=não" << endl;
                 cin >> u;
 
@@ -330,7 +325,6 @@ int main(int argc, char** argv){
                 if( u == 1 ){
                     remove_veiculo(y,tam,bd);
                     cout << "Veículo removido\n\n\n\n";
-                    tam--;
                     break;
                 }else if ( u == 2 ){
                     cout << "Veículo não removido\n\n\n\n";
@@ -354,7 +348,7 @@ int main(int argc, char** argv){
             break;
             
         case 5:
-             cout << "Autores:Gustavo Fernandez Pascoaleto 2021.1.08.009\n \tLeticia.\n \tLucas Pessoa Oliveira Alves 2022.1.08.044\n\n";
+             cout << "Autores:Gustavo Fernandez Pascoaleto 2021.1.08.009\n \tLetícia Freitas de Oliveira 2018.1.08.051\n \tLucas Pessoa Oliveira Alves 2022.1.08.044\n\n";
              break;
                 
             
