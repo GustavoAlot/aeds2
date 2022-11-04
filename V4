@@ -251,14 +251,15 @@ int main(int argc, char** argv){
     Tveiculo * bd[50];
     Tveiculo * p;
     p = new Tveiculo;
-    int tam = 0;
+    int tam = -1;
     int x;
     string y;
     int u;                                    //declaração das variáves usadas
     
     
     if (myfile.is_open()){                      // passando txt para o vetor de ponteiros para struct
-        while ( !myfile.eof() ){
+        do {
+            tam++;
             bd[tam] = new Tveiculo; 
             myfile >> bd[tam]->modelo;
             myfile >> bd[tam]->marca;
@@ -273,8 +274,7 @@ int main(int argc, char** argv){
             myfile >> bd[tam]->portas;
             myfile >> bd[tam]->placa;
             myfile >> bd[tam]->valor;
-            tam++;
-        }
+        }while(!myfile.eof() );
         myfile.close();
         
                                         
@@ -286,9 +286,8 @@ int main(int argc, char** argv){
     else
         cout << "\n\n\n ARQUIVO NÃO ENCONTRADO. \n\n\n" << endl;
 
-    char op[50];
-    int newop;
-    do{                                                   //printar o menu na tela
+    int newop = 0;
+    while(newop!=6){                                                   //printar o menu na tela
         cout << "[1] Incluir novo veículo." << endl;
         cout << "[2] Busca por placa." << endl;
         cout << "[3] Buscar os 10 veículos próximos." << endl;
@@ -299,8 +298,7 @@ int main(int argc, char** argv){
     
         cout<< "Insira a opção desejada:"<< endl;
         
-        cin >> op;
-        newop = atoi(op);     
+        cin >> newop;   
         switch(newop){
         case 1:
             if(tam == 50){
@@ -361,7 +359,7 @@ int main(int argc, char** argv){
                 
             
         case 6:
-            printarq(bd,tam-1);
+            printarq(bd,tam);
             cout << "Programa finalizado."<< endl;
             return 0;
             break;
@@ -369,10 +367,8 @@ int main(int argc, char** argv){
         default:
             cout <<"\n\t\tOpção inválida.\n\n";
         } 
-    } while (op !=0);
-
-
-    system("pause");
+    } 
+    
     return 0;
     
 }
